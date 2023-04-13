@@ -1,7 +1,7 @@
 ﻿ <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <NavLink href="Contact" Match="NavLinkMatch.All">
-                <span class="navbar-brand" href="#page-top">Start Bootstrap</span>
+                <NavLink href="/" Match="NavLinkMatch.All">
+                <span class="navbar-brand" >Start Bootstrap</span>
                 </NavLink>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -25,4 +25,14 @@
         </nav>
 
 
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
 
