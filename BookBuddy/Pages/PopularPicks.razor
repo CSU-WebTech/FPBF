@@ -1,6 +1,6 @@
 ﻿@page "/Popular-Picks"
 
-<PageTitle>PopularPicks</PageTitle>
+<PageTitle>Popularpicks</PageTitle>
 
 <section class="about-section text-center" id="about">
     <div class="container px-4 px-lg-5">
@@ -9,14 +9,14 @@
                
     
                  <div class="col-mod-10 col-lg-8 mx-auto text-center">
-                    <h2 class="text-white mb-5">lets explore!<i class="fa-solid fa-shuttle-space fa-rotate-270 text-white"></i></h2>
+                    <h2 class="text-white mb-5">lets explore<i class="fa-solid fa-shuttle-space fa-rotate-270 text-white"></i></h2>
                     <p class="text-white-50">
-                        login with the email below to get explore into the different kinds of genres.
+                        login with the book name below to get explore into the different kinds of genres.
                     </p>
                     <form class="form-signup" id="contactForm" data-sb-form-api-token="API_TOKEN">
                         <div class="row input-group-newsletter">
                             <div class="col">
-                                <input class="form-control" id="emailAddress"ctype="email" placeholder="Enter email address..." aria-label="Enter email address.." data-sb-validations="required,email/">
+                                <input class="form-control" id="bookName"ctype="book" placeholder="Enter book name..." aria-label="Enter book name.." data-sb-validations="required,book/">
                             </div>
                             <div class="col-auto">
                                 <button class="btn btn-primary" id="submitButton type="submit">
@@ -24,8 +24,8 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="invalid-feedback mt-2" data-sb-feedback="emailAddress:required">An email is required.</div>
-                        <div class="invalid-feedback mt-2" data-sb-feedback="emailAddress:email">Email is nor valid.</div>
+                        <div class="invalid-feedback mt-2" data-sb-feedback="bookName:required">book is required.</div>
+                        <div class="invalid-feedback mt-2" data-sb-feedback="bookName:email">book is not valid.</div>
                     </form>
                 </div>
             </div>
