@@ -1,4 +1,4 @@
-﻿@page "/Popular Picks"
+﻿@page "/Popular-Picks"
 
 <PageTitle>PopularPicks</PageTitle>
 
@@ -9,19 +9,18 @@
                
     
                  <div class="col-mod-10 col-lg-8 mx-auto text-center">
-                    <i class="fa-solid fa-shuttle-space fa-rotate-270 text-white"></i>
-                    <h2 class="text-white mb-5">lets explore!</h2>
+                    <h2 class="text-white mb-5">lets explore!<i class="fa-solid fa-shuttle-space fa-rotate-270 text-white"></i></h2>
                     <p class="text-white-50">
-                        Use the input below to select a date for Book of the day.
+                        login with the email below to get explore into the different kinds of genres.
                     </p>
                     <form class="form-signup" id="contactForm" data-sb-form-api-token="API_TOKEN">
                         <div class="row input-group-newsletter">
                             <div class="col">
-                                <input class="form-control" id="emailAddress"ctype="email" placeholder="Enter email address..." aria-label="Enter email address..">
+                                <input class="form-control" id="emailAddress"ctype="email" placeholder="Enter email address..." aria-label="Enter email address.." data-sb-validations="required,email/">
                             </div>
                             <div class="col-auto">
-                                <button class="btn btn-primary disabled" id="submitButton type="submit">
-                                    Notify Me!
+                                <button class="btn btn-primary" id="submitButton type="submit">
+                                    submit
                                 </button>
                             </div>
                         </div>
