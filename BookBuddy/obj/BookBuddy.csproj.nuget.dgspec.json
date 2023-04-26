@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/workspace/FPBF/BookBuddy/BookBuddy.csproj": {}
+    "/Users/kae/Documents/GitHub/FPBF/BookBuddy/BookBuddy.csproj": {}
   },
   "projects": {
-    "/workspace/FPBF/BookBuddy/BookBuddy.csproj": {
+    "/Users/kae/Documents/GitHub/FPBF/BookBuddy/BookBuddy.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/workspace/FPBF/BookBuddy/BookBuddy.csproj",
+        "projectUniqueName": "/Users/kae/Documents/GitHub/FPBF/BookBuddy/BookBuddy.csproj",
         "projectName": "BookBuddy",
-        "projectPath": "/workspace/FPBF/BookBuddy/BookBuddy.csproj",
-        "packagesPath": "/home/gitpod/.nuget/packages/",
-        "outputPath": "/workspace/FPBF/BookBuddy/obj/",
+        "projectPath": "/Users/kae/Documents/GitHub/FPBF/BookBuddy/BookBuddy.csproj",
+        "packagesPath": "/Users/kae/.nuget/packages/",
+        "outputPath": "/Users/kae/Documents/GitHub/FPBF/BookBuddy/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/gitpod/.nuget/NuGet/NuGet.Config"
+          "/Users/kae/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -62,7 +62,7 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
-              "version": "[7.0.0, 7.0.0]"
+              "version": "[7.0.2, 7.0.2]"
             }
           ],
           "frameworkReferences": {
@@ -70,7 +70,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/gitpod/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.102/RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
