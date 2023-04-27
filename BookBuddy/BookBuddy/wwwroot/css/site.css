@@ -1,0 +1,126 @@
+@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: white;
+}
+
+a, .btn-link {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.content {
+    padding-top: 1.1rem;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+.bg1 {
+    background-image: url('/assets/bg_image1.png'); /* replace with the path to your image */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.book {
+    margin: 0 10px;
+}
+
+    .book img {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .book p {
+        text-align: center;
+        margin-top: 10px;
+    }
+#loader {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    font-size: 36px;
+}
+#book-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.book1 {
+    display: flex;
+    background-color: white;
+    margin-bottom: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    border: 5px solid black;
+}
+
+.book1-img {
+    width: 40%;
+    padding: 10px;
+}
+
+    .book1-img img {
+        max-width: 100%;
+        height: auto;
+    }
+
+.book1-info {
+    width: 60%;
+    padding: 10px;
+}
+.genre {
+    background-color: #3E2356;
+    color: white;
+    margin-left: 20%;
+}
+    .book1-info h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: black;
+        font-weight: bold;
+    }
+
+    .book1-info p {
+        font-size: 16px;
+        margin-bottom: 30%;
+        color: black;
+    }

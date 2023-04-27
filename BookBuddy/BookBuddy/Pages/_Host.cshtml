@@ -1,0 +1,180 @@
+﻿@page "/"
+@namespace BookBuddy.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookBuddy</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="BookBuddy.styles.css" rel="stylesheet" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Google Books Embedded Viewer API Example</title>
+    <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
+    <script>
+        google.books.load();
+        function changeBackgroundImage(className) {
+            console.log(className)
+            var div = document.getElementById("bg-image");
+            if (className=='bg1')
+                div.style.backgroundImage = "url('/assets/bg_image1.png')";
+            else if (className == 'bg2')
+                div.style.backgroundImage = "url('/assets/bg_image2.png')";
+            else if (className == 'bg3')
+                div.style.backgroundImage = "url('/assets/bg_image2.png')";
+            const genres = ["Mystery", "Adventure", "Fiction"];
+            for (let i = 0; i < genres.length; i++) {
+                searchByGenre(genres[i]);
+            }
+            displayBooks();
+        }
+    </script>
+    <script type="text/javascript">
+        function displayBooks() {
+            const url = "https://www.googleapis.com/books/v1/volumes?q=inauthor:keyes&orderBy=relevance";
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const bookList = document.getElementById('book-list');
+                    data.items.forEach(book => {
+                        const bookDiv = document.createElement('div');
+                        bookDiv.classList.add('book1');
+                        const imgDiv = document.createElement('div');
+                        imgDiv.classList.add('book1-img');
+                        const img = document.createElement('img');
+                        img.src = book.volumeInfo.imageLinks.thumbnail;
+                        img.alt = book.volumeInfo.title;
+                        imgDiv.appendChild(img);
+                        const infoDiv = document.createElement('div');
+                        infoDiv.classList.add('book1-info');
+                        const title = document.createElement('h3');
+                        title.innerText = book.volumeInfo.title;
+                        infoDiv.appendChild(title);
+                        const author = document.createElement('p');
+                        author.innerText = book.volumeInfo.authors.join(", ");
+                        infoDiv.appendChild(author);
+                        const genre = document.createElement('button');
+                        genre.innerText = book.volumeInfo.categories.join(", ");
+                        genre.classList = "genre"
+                        infoDiv.appendChild(genre);
+                        bookDiv.appendChild(imgDiv);
+                        bookDiv.appendChild(infoDiv);
+                        bookList.appendChild(bookDiv);
+                    });
+                })
+                .catch(error => console.error(error));
+        }
+
+
+        function searchByGenre(genre) {
+            //var section = document.createElement('section');
+            //section.classList.add('genre-section');
+            var genreTitle = document.createElement('h2');
+            genreTitle.innerText = genre;
+            var url = "https://www.googleapis.com/books/v1/volumes?q=subject:" + encodeURIComponent(genre);
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.totalItems > 0) {
+                        var volumes = data.items;
+                        //var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+                        var viewer = document.getElementById('viewerCanvas');
+                        document.getElementById('viewerCanvas').appendChild(genreTitle);
+                        var row = document.createElement('div');
+                        row.classList.add('row');
+                        var count = 0;
+                        for (var i = 0; i < volumes.length && count < 5; i++) {
+                            var volume = volumes[i].volumeInfo;
+                            var imageUrl = volume.imageLinks ? volume.imageLinks.thumbnail : null;
+                            if (imageUrl) {
+                                //var isbn = volume.industryIdentifiers[0].identifier;
+                                //viewer.load(isbn, alertNotFound, alertInitialized, alertLoadFailed, { view: 'COVER' });
+                                var col = document.createElement('div');
+                                col.classList.add('col-sm-2', 'book');
+                                var img = document.createElement('img');
+                                img.src = imageUrl;
+                                col.appendChild(img);
+                                var title = document.createElement('p');
+                                title.innerText = volume.title;
+                                col.appendChild(title);
+                                row.appendChild(col);
+                                count++;
+                                if (count == 5 || i == volumes.length - 1) {
+                                    document.getElementById('viewerCanvas').appendChild(row);
+                                    row = document.createElement('div');
+                                    row.classList.add('row');
+                                    count = 0;
+                                }
+                            }
+                        }
+                    }
+                })
+                .catch(error => console.error(error));
+        }
+        function alertInitialized() {
+            console.log("book successfully loaded and initialized!");
+        }
+        function alertNotFound() {
+            console.log("could not embed the book!");
+        }
+        function alertLoadFailed() {
+            console.log("failed to load the book!");
+        }
+        google.books.load();
+        //if (viewerCanvas) {
+
+        //    const mysteryLink = document.getElementById("genre-link");
+        //    console.log("called");
+        //    mysteryLink.addEventListener("click", () => {
+        //        loader.style.display = "block"; // show the loader
+        //        for (let i = 0; i < genres.length; i++) {
+        //            searchByGenre(genres[i]);
+        //        }
+        //        loader.style.display = "none"; // hide the loader
+        //    });
+        //}
+        //google.books.setOnLoadCallback(() => {
+        //    const loader = document.getElementById("loader");
+        //    const genres = ["Mystery", "Adventure", "Fiction"];
+        //    var viewerCanvas = document.getElementById('viewerCanvas');
+
+        //    const mysteryLink = document.getElementById("genre-link");
+        //    mysteryLink.addEventListener("click", () => {
+        //        loader.style.display = "block"; // show the loader
+        //        for (let i = 0; i < genres.length; i++) {
+        //            if (viewerCanvas) {
+        //                searchByGenre(genres[i]);
+        //            }
+        //        }
+        //        loader.style.display = "none"; // hide the loader
+        //    });
+          
+        //});
+    </script>
+
+
+</head>
+<body>
+    <div id="loader">Loading...</div>
+    <component type="typeof(App)" render-mode="ServerPrerendered" />
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            An error has occurred. This application may no longer respond until reloaded.
+        </environment>
+        <environment include="Development">
+            An unhandled exception has occurred. See browser dev tools for details.
+        </environment>
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script src="_framework/blazor.server.js"></script>
+</body>
+</html>
