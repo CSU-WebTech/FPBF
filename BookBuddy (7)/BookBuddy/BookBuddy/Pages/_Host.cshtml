@@ -1,0 +1,260 @@
+﻿@page "/"
+@namespace BookBuddy.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookBuddy</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="BookBuddy.styles.css" rel="stylesheet" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Google Books Embedded Viewer API Example</title>
+    <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        google.books.load();
+        function changeBackgroundImage(className) {
+            console.log(className)
+            var div = document.getElementById("bg-image");
+            if (className == 'bg1') {
+                div.style.backgroundImage = "url('/assets/bg_image1.png')";
+                //displaySearchResults();
+            }
+            else if (className == 'bg2') {
+                div.style.backgroundImage = "url('/assets/bg_image2.png')";
+                displayBooks();
+            }
+            else if (className == 'bg3') {
+                div.style.backgroundImage = "url('/assets/bg_image2.png')";
+                const genres = ["Mystery", "Adventure", "Fiction"];
+                for (let i = 0; i < 3; i++) {
+                    searchByGenre(genres[i]);
+                }
+            }
+
+        }
+    </script>
+    <script type="text/javascript">
+        google.books.load();
+        function displayBooks() {
+            const url = "https://www.googleapis.com/books/v1/volumes?q=inauthor:keyes&orderBy=relevance";
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const bookList = document.getElementById('book-list');
+                    bookList.innerHTML = ''; // clear the book list before adding new books
+                    data.items.forEach(book => {
+                        const bookDiv = document.createElement('div');
+                        bookDiv.classList.add('book1');
+                        const imgDiv = document.createElement('div');
+                        imgDiv.classList.add('book1-img');
+                        const img = document.createElement('img');
+                        img.src = book.volumeInfo.imageLinks.thumbnail;
+                        img.alt = book.volumeInfo.title;
+                        imgDiv.appendChild(img);
+                        const infoDiv = document.createElement('div');
+                        infoDiv.classList.add('book1-info');
+                        const title = document.createElement('h3');
+                        title.innerText = book.volumeInfo.title;
+                        infoDiv.appendChild(title);
+                        const author = document.createElement('p');
+                        author.innerText = book.volumeInfo.authors.join(", ");
+                        infoDiv.appendChild(author);
+                        const genre = document.createElement('button');
+                        genre.innerText = book.volumeInfo.categories.join(", ");
+                        genre.classList = "genre";
+                        imgDiv.addEventListener('click', function () {
+                            window.open(book.volumeInfo.infoLink, '_blank');
+                        });
+                        infoDiv.appendChild(genre);
+                        bookDiv.appendChild(imgDiv);
+                        bookDiv.appendChild(infoDiv);
+                        bookList.appendChild(bookDiv);
+                    });
+                })
+                .catch(error => console.error(error));
+        }
+
+
+
+        function displaySearchResults(e) {
+            // e.preventDefault();
+            const queryType = document.querySelector('input[name="searchType"]:checked').value;
+            const queryValue = document.querySelector('#searchText').value;
+            console.log(queryType, queryValue);
+            let url = 'https://www.googleapis.com/books/v1/volumes?q=';
+            if (queryType === 'title') {
+                url += 'intitle:' + encodeURIComponent(queryValue);
+            } else if (queryType === 'author') {
+                url += 'inauthor:' + encodeURIComponent(queryValue);
+            } else if (queryType === 'genre') {
+                url += 'subject:' + encodeURIComponent(queryValue);
+            }
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const searchResults = document.getElementById('searchResults');
+                    searchResults.innerHTML = '';
+                    data.items.forEach(book => {
+                        const bookDiv = document.createElement('div');
+                        bookDiv.classList.add('book2');
+                        const imgDiv = document.createElement('div');
+                        imgDiv.classList.add('book2-img');
+                        const img = document.createElement('img');
+                        img.src = book.volumeInfo.imageLinks?.thumbnail;
+                        img.alt = book.volumeInfo?.title;
+                        imgDiv.appendChild(img);
+                        const infoDiv = document.createElement('div');
+                        infoDiv.classList.add('book2-info');
+                        const title = document.createElement('h3');
+                        title.innerText = book.volumeInfo.title;
+                        infoDiv.appendChild(title);
+                        const author = document.createElement('p');
+                        author.innerText = book.volumeInfo.authors?.join(', ');
+                        infoDiv.appendChild(author);
+                        const genre = document.createElement('button');
+                        genre.innerText = book.volumeInfo.categories.join(", ");
+                        genre.classList = "genre";
+                        imgDiv.addEventListener('click', function () {
+                            window.open(book.volumeInfo.infoLink, '_blank');
+                        });
+                        infoDiv.appendChild(genre);
+                        bookDiv.appendChild(imgDiv);
+                        bookDiv.appendChild(infoDiv);
+                        searchResults.appendChild(bookDiv);
+                    });
+                })
+                .catch(error => console.error(error));
+        }
+        function searchByGenre(genre) {
+            console.log(genre);
+            var prevItem;
+            var genreCustom;
+            var url = "https://www.googleapis.com/books/v1/volumes?q=subject:" + encodeURIComponent(genre);
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (genre === "Mystery") {
+                        genreCustom = document.getElementById('genre1');
+                        const genre1Cont = document.getElementById('genre1-container');
+                        var genreName = document.createElement('h3');
+                        genreName.innerText = genre;
+                    //    genre1Cont.appendChild(genreName);
+                    }
+                    else if (genre === "Adventure") {
+                        genreCustom = document.getElementById('genre2');
+                        const genre2Cont = document.getElementById('genre2-container');
+                        var genreName = document.createElement('h3');
+                        genreName.innerText = genre;
+                    //    genre2Cont.appendChild(genreName)
+                    }
+                    else if (genre === "Fiction") {
+                        genreCustom = document.getElementById('genre3');
+                        const genre3Cont = document.getElementById('genre3-container');
+                        var genreName = document.createElement('h3');
+                        genreName.innerText = genre;
+                    //    genre3Cont.appendChild(genreName)
+                    }
+
+
+                    var count = 0;
+                    data.items.forEach(book => {
+                        //const carouselInner = document.getElementById('carousel-inner');
+                        if (count % 4 === 0) {
+
+                            var item = document.createElement('div');
+                            if (count === 0)
+                                item.className = 'item active';
+                            else {
+                                item.className = 'item';
+
+                            }
+                        }
+                        else {
+                            item = prevItem;
+                        }
+                        count++;
+                            const card = document.createElement('div');
+                            card.className = 'col-md-3';
+                            card.innerHTML = `
+                  <img src="${book.volumeInfo.imageLinks.thumbnail}" class="img-responsive">
+                    <h5 class="card-title">${book.volumeInfo.title}</h5>
+              `;
+                        
+                        item.appendChild(card);
+                        genreCustom.appendChild(item);
+                        prevItem = item;
+                    });
+
+
+                })
+        }
+        $(document).ready(function () {
+            // Instantiate the Bootstrap carousel
+            $('#multi-carousel').carousel({
+                interval: false
+            });
+
+            // for every slide in carousel, copy the next slide's item in the slide.
+            // Do the same for the next, next item.
+            $('.multi-item-carousel .item').each(function () {
+                var next = $(this).next();
+                if (!next.length) {
+                    next = $(this).siblings(':first');
+                }
+                next.children(':first-child').clone().appendTo($(this));
+
+                if (next.next().length > 0) {
+                    next.next().children(':first-child').clone().appendTo($(this));
+                } else {
+                    $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+                }
+            });
+        });
+
+
+        function alertInitialized() {
+            console.log("book successfully loaded and initialized!");
+        }
+        function alertNotFound() {
+            console.log("could not embed the book!");
+        }
+        function alertLoadFailed() {
+            console.log("failed to load the book!");
+        }
+
+    </script>
+
+
+</head>
+<body>
+    <div id="loader">Loading...</div>
+    <component type="typeof(App)" render-mode="ServerPrerendered" />
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            An error has occurred. This application may no longer respond until reloaded.
+        </environment>
+        <environment include="Development">
+            An unhandled exception has occurred. See browser dev tools for details.
+        </environment>
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script src="_framework/blazor.server.js"></script>
+</body>
+</html>

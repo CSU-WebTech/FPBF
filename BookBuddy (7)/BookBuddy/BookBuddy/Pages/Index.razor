@@ -1,0 +1,39 @@
+﻿@page "/"
+@using System.Net.Http
+@using System.Threading.Tasks
+@using Newtonsoft.Json
+@using BookBuddy.Services
+@inject IJSRuntime JSRuntime
+<!-- Your page content goes here -->
+
+<div class="d-flex justify-content-center align-items-center" >
+    <form class="my-2 my-lg-0" style="margin-top:20% !important">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search books by title, Author or Genre" aria-label="Search" id="searchText">
+        <div style="display: inline-block; vertical-align: middle;margin-right:20px;" >
+            <label for="searchTitle">Title</label>
+            <input type="radio" id="searchTitle" name="searchType" value="title" checked>
+        </div>
+        <div style="display: inline-block; vertical-align: middle; margin-right: 20px">
+            <label for="searchAuthor">Author</label>
+            <input type="radio" id="searchAuthor" name="searchType" value="author">
+        </div>
+        <div style="display: inline-block; vertical-align: middle; margin-right: 20px">
+            <label for="searchGenre">Genre</label>
+            <input type="radio" id="searchGenre" name="searchType" value="genre">
+        </div>
+        <div style="vertical-align: middle;margin-left:200px;">
+            <button type="button" class="btn btn-outline-success my-2 my-sm-0" style="background-color:white" @onclick='async() => {  await searchResult(); }'>Search</button>
+        </div>
+    </form>
+</div>
+<div id="searchResults"></div>
+
+
+@code {
+
+    private async Task searchResult()
+    {
+        await JSRuntime.InvokeVoidAsync("displaySearchResults");
+
+    }
+}
