@@ -1,0 +1,46 @@
+﻿@inject IJSRuntime JSRuntime
+
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">BookBuddy</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All" @onclick='() => SetBackground("bg1")'>
+                <span aria-hidden="true"></span> Home
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="popular-picks" @onclick='() => SetBackground("bg2")' id="genre-link">
+                <span aria-hidden="true"></span> Popular Picks
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Genres" @onclick='() => SetBackground("bg3")'>
+                <span aria-hidden="true"></span> Genres
+            </NavLink>
+        </li>
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+    private string backgroundClass = "";
+
+    private async Task SetBackground(string className)
+    {
+        await JSRuntime.InvokeVoidAsync("changeBackgroundImage", className);
+
+    }
+}
